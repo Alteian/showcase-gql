@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  web:
+    image: alteian_unchained
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: ProjectAlteian/Dockerfile
+    command: "python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    volumes:
+      - ./ProjectAlteian/:/code/ProjectAlteian/
+      - ./manage.py:/code/manage.py
+    networks:
+      - AlteianNetwork
+    depends_on:
+      - postgres
+
+  postgres:
+    restart: unless-stopped
+    image: postgres
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_DATABASE: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    env_file:
+      - .env
+    volumes:
+      - postgresql_data:/var/lib/postgresql
+      - /tmp:/backups
+    networks:
+      - AlteianNetwork
+    ports:
+      - 5432:5432
+
+volumes:
+  postgresql_data:
+
+networks:
+  AlteianNetwork:
+    driver: bridge
+    ipam:
+      driver: default

@@ -6,14 +6,10 @@ from strawberry_django_plus.directives import SchemaDirectiveExtension
 from strawberry_django_plus.optimizer import DjangoOptimizerExtension
 
 from ProjectAlteian.user.graphql.queries import PingQuery, UserQuery
+from ProjectAlteian.user.graphql.schema import UserBatchQuery
 
-Query = merge_types(
-    name="Query",
-    types=(
-        PingQuery,
-        UserQuery
-        )
-    )
+Query = UserBatchQuery
+
 
 schema = Schema(
     query=Query,

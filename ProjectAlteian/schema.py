@@ -5,15 +5,14 @@ from strawberry.extensions import QueryDepthLimiter
 from strawberry_django_plus.directives import SchemaDirectiveExtension
 from strawberry_django_plus.optimizer import DjangoOptimizerExtension
 
-from ProjectAlteian.user.graphql.queries import PingQuery, UserQuery
-from ProjectAlteian.user.graphql.schema import UserBatchQuery
+from ProjectAlteian.user.graphql.schema import UserBatchQuery, UserBatchMutation
 
 Query = UserBatchQuery
-
+Mutation = UserBatchMutation
 
 schema = Schema(
     query=Query,
-    # mutation=Mutation,
+    mutation=Mutation,
     # subscription=Subscription,
     config=StrawberryConfig(
         auto_camel_case=True,

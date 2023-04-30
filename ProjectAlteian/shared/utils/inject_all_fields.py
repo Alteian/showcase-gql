@@ -1,7 +1,7 @@
 from strawberry_django_plus import gql
 from functools import wraps
 
-def inject_all_fields(model):
+def inject_all_fields(model, ignore_fields=[]):
     """
     Lazy field injection for models.\n
     Example:
@@ -13,6 +13,7 @@ def inject_all_fields(model):
     @wraps(model)
     def wrapper(fn):
         for f in model._meta.fields:
-            fn.__annotations__[f.name] = gql.auto
+            if f.name not in ignore_fields:
+                fn.__annotations__[f.name] = gql.auto
         return fn
     return wrapper

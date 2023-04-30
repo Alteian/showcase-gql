@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
-
+import uuid
 from ProjectAlteian.shared.models.base_user import BaseUserModel
 
 
@@ -37,7 +37,7 @@ class User(BaseUserModel):
     EMAIL_FIELD = "email"
 
     objects = UserManager()
-
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     username = models.CharField(max_length=255, unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)

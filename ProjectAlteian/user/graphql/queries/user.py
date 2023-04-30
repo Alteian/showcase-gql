@@ -11,6 +11,11 @@ from ProjectAlteian.user.graphql.filters import UserFilter
 from ProjectAlteian.user.graphql.orders import UserOrder
 from ProjectAlteian.user.models import User
 
+
+@gql.type
+class StringType:
+    message: str
+
 @gql.type
 class UserQuery:
     user: typing.Optional[UserType] = gql.django.node()
@@ -29,3 +34,10 @@ class UserQuery:
         if order:
             queryset = apply_ordering(queryset, order)
         return queryset
+
+    @gql.django.field()
+    def user_or_string(
+        self,
+        info: Info,
+        ) -> typing.Union[UserType, StringType]:
+        return StringType(message="Hello World!")
